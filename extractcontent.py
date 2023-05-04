@@ -96,9 +96,11 @@ class ExtractContent(object):
         score = 0
         bodylist = []
         list = \
-        re.split(r"""</?(?:div|center|td)[^>]*>|<p\s*[^>]*class\s*=\s*
+        re.split(r"""</?(?:div|center|table)[^>]*>|<p\s*[^>]*class\s*=\s*
                 [\"']?(?:posted|plugin-\w+)['\"]?[^>]*>""", html)
         for block in list:
+            print('len: ' + str(len(block)))
+            print('block: ' + block)
             if self._has_only_tags(block):
                 continue
 
@@ -107,9 +109,11 @@ class ExtractContent(object):
 
             # ignore link list block
             notlinked = self._eliminate_link(block)
+            print('notlinked: ' + notlinked)
             if len(notlinked) < opt["min_length"]:
                 continue
 
+            print('2========')
             # calculate score of block
             c = (len(notlinked) + self._count_pattern(notlinked,
                 opt["punctuations"]) * opt["punctuation_weight"]) * factor
@@ -203,8 +207,12 @@ class ExtractContent(object):
         notlinked, count = re.subn(r"(?is)<a\s[^>]*>.*?<\/a\s*>", "", html)
         notlinked = re.sub(r"(?is)<form\s[^>]*>.*?</form\s*>", "", notlinked)
         notlinked = self._strip_tags(notlinked)
-        if (len(notlinked) < 20 * count) or (self._islinklist(html)):
-            return ""
+        print('notlinked: ' + notlinked)
+        print('count: ' + str(count))
+        print('========')
+#        if (len(notlinked) < 20 * count) or (self._islinklist(html)):
+#        if (len(notlinked) < 20 * count):
+#            return ""
         return notlinked
 
     # determines whether a block is link list or not
