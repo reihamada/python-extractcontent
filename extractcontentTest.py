@@ -7,7 +7,8 @@ import chardet
 
 # Sample URL
 # <table>部に説明がある: https://japan-attractions.jp/ja/alcohol/local-beer-fest-in-kofu/
-# リンクリスト: 'https://event-navi.jp/event/detail/---id-3594.html
+# https://www.tamajiman.co.jp/info/337
+# リンクリスト: https://event-navi.jp/event/detail/---id-3594.html
 
 # User-Agent偽装
 class AppURLopener(urllib.FancyURLopener):
