@@ -37,6 +37,7 @@ class ExtractContent(object):
         "debug": False,
         # if true, output block information to stdout
         "allow_linked": True,
+        "get_whole_table_element": True,
     }
 
     def __init__(self, opt=None):
@@ -96,9 +97,14 @@ class ExtractContent(object):
         body = ''
         score = 0
         bodylist = []
-        list = \
-        re.split(r"""</?(?:div|center|table)[^>]*>|<p\s*[^>]*class\s*=\s*
-                [\"']?(?:posted|plugin-\w+)['\"]?[^>]*>""", html)
+        if (opt["get_whole_table_element"] == False):
+            list = \
+            re.split(r"""</?(?:div|center|td)[^>]*>|<p\s*[^>]*class\s*=\s*
+                    [\"']?(?:posted|plugin-\w+)['\"]?[^>]*>""", html)
+        else:
+            list = \
+            re.split(r"""</?(?:div|center|table)[^>]*>|<p\s*[^>]*class\s*=\s*
+                    [\"']?(?:posted|plugin-\w+)['\"]?[^>]*>""", html)
         for block in list:
             if self._has_only_tags(block):
                 continue
