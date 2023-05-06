@@ -106,11 +106,17 @@ class ExtractContent(object):
             re.split(r"""</?(?:div|center|table)[^>]*>|<p\s*[^>]*class\s*=\s*
                     [\"']?(?:posted|plugin-\w+)['\"]?[^>]*>""", html)
         for block in list:
+            print('block' + block.encode('utf-8'))
+            print('========')
             if self._has_only_tags(block):
                 continue
+            # print('block' + block.encode('utf-8'))
+            # print('========')
 
             if len(body) > 0:
                 continuous /= opt["continuous_factor"]
+            # print('block' + block.encode('utf-8'))
+            # print('========')
 
             # ignore link list block
             if (opt["allow_linked"] == False):
@@ -119,6 +125,8 @@ class ExtractContent(object):
                 notlinked = self._strip_tags(block)
             if len(notlinked) < opt["min_length"]:
                 continue
+            # print('block' + block.encode('utf-8'))
+            # print('========')
 
             # calculate score of block
             c = (len(notlinked) + self._count_pattern(notlinked,
